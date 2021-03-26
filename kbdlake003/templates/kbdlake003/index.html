@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>kbdlake003</title>
+  <meta charset="UTF-8">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+  <h1>kbd2eadatalake003</h1>
+  <p>データダウンロードしましょう！</p>
+
+<form >
+<p>
+コンテナ名：
+<select id="searchcontainer">
+<option value=sandbox>sandbox</option>
+<option value=regular>regular</option>
+</select>
+</p>
+
+<p>
+ファイル名（前方一致）：<input type="text" id="searchtext" size="40" maxlength="20">
+</p>
+
+<p>
+<input type="button" name="btnsearch" value="検索" onclick="buttonClickSearch()">
+<input type="button" name="btndl"  value="ダウンロード" onclick="buttonClickDl()">
+</p>
+</form>
+
+<p>
+<select id="searchview" size="20" maxlength="20">
+<option value="サンプル1">選択肢のサンプル1</option>
+<option value="サンプル2">選択肢のサンプル2</option>
+<option value="サンプル3">選択肢のサンプル3</option>
+<option value="サンプル4">選択肢のサンプル4</option>
+<option value="サンプル5">選択肢のサンプル5</option>
+</select>
+</p>
+
+<script>
+function buttonClickSearch(){
+    // コンテナ名
+    var container = document.getElementById("searchcontainer");
+    txtContainer = container.options[container.selectedIndex].value;
+    
+    // 検索文字
+    txtTxt = document.getElementById("searchtext").value;
+    
+    // セレクトボックス初期化
+    sl = document.getElementById("searchview");
+    while (sl.lastChild)
+    {
+        sl.removeChild(sl.lastChild)
+    }
+    
+    // Ajax通信開始
+    $.ajax({
+        url:"{% url 'kbdlake003:get_blob' %}",
+        method:"GET",
+        data:{"container":txtContainer, "txt":txtTxt},
+        datatype:"text",
+    })
+    .done(function(data) {
+        listData=data.split(",")
+        for (const elem of listData) {
+            let op = document.createElement("option");
+            op.value = elem;  //value値
+            op.text = elem;   //テキスト値
+            document.getElementById("searchview").appendChild(op);
+            console.log(elem)
+        }
+        console.log("Sucess")
+    })
+}
+
+function buttonClickDl(){
+    var win = null;
+    
+    // コンテナ名
+    var container = document.getElementById("searchcontainer");
+    txtContainer = container.options[container.selectedIndex].value;
+
+    // セレクトボックス
+    txtSelect = document.getElementById("searchview").value;
+
+    // Ajax通信開始
+    $.ajax({
+        url:"{% url 'kbdlake003:download_blob' %}",
+        method:"GET",
+        data:{"container":txtContainer, "blob":txtSelect},
+        datatype:"text",
+    })
+    .done(function(data) {
+        console.log("Sucess")
+        // ダウンロード画面を開く
+        console.log("href:", location.href);
+        console.log("container:", txtContainer);
+        console.log("blob:", txtSelect)
+        win = window.open(location.href+"ajax/download_blob?container="+txtContainer+"&blob="+txtSelect)
+//        win = window.open("http://127.0.0.1:8000/kbdlake003/ajax/download_blob?container=kbddds&blob=SAMPLE%2Fsample1.txt");
+    })
+
+//    alert("Dl");
+}
+
+</script>
+
+</body>
+</html>
