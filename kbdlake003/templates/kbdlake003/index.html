@@ -1,6 +1,9 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
+<div style="background: url({% static 'img/watercolor.png' %});">
 <head>
+  <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
   <title>kbdlake003</title>
   <meta charset="UTF-8">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -8,28 +11,29 @@
 <body>
   <h1>kbd2eadatalake003</h1>
   <p>データダウンロードしましょう！</p>
+  <p>コンテナ名を選択して、検索ファイルパスを入力して「検索」</p>
 
 <form >
 <p>
 コンテナ名：
-<select id="searchcontainer">
+<select class="form-select" id="searchcontainer">
 <option value=sandbox>sandbox</option>
 <option value=regular>regular</option>
 </select>
 </p>
 
 <p>
-ファイル名（前方一致）：<input type="text" id="searchtext" size="40" maxlength="20">
+ファイル名（前方一致）：<input class="form-control" type="text" id="searchtext" placeholder="検索用ファイルパス Ex)SANDBOX/YHD">
 </p>
 
 <p>
-<input type="button" name="btnsearch" value="検索" onclick="buttonClickSearch()">
-<input type="button" name="btndl"  value="ダウンロード" onclick="buttonClickDl()">
+<input type="button" name="btnsearch" value="検索" onclick="buttonClickSearch()" class="btn btn-primary">
+<input type="button" name="btndl"  value="ダウンロード" onclick="buttonClickDl()" class="btn btn-primary">
 </p>
 </form>
 
 <p>
-<select id="searchview" size="20" maxlength="20">
+<select class="form-select" id="searchview" size="20">
 <option value="サンプル1">選択肢のサンプル1</option>
 <option value="サンプル2">選択肢のサンプル2</option>
 <option value="サンプル3">選択肢のサンプル3</option>
@@ -107,4 +111,5 @@ function buttonClickDl(){
 </script>
 
 </body>
+</div>
 </html>

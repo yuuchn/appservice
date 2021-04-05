@@ -20,7 +20,7 @@ def get_blob(req):
 
 def download_blob(req):
 
-    path = os.getcwd()+'\\kbdlake003\\application\\download'
+    path = os.getcwd()+'/kbdlake003/application/download'
     # 古いファイルは削除
     now = datetime.datetime.today()# 現在の日付を取得
     for file in glob.glob(path+'\*', recursive=True):
@@ -37,12 +37,12 @@ def download_blob(req):
         except OSError as e:
             pass
 
-    folder_path = os.path.dirname(os.getcwd()+'\\kbdlake003\\application\\download\\'+req.GET.get("blob"))    
+    folder_path = os.path.dirname(os.getcwd()+'/kbdlake003/application/download/'+req.GET.get("blob"))    
     if not os.path.exists(folder_path):
         os.makedirs(folder_path)
 
     # Blob取得 download_kbd_blob(container_name, blob_file_name, download_file_path)
-    write_data.download_kbd_blob(req.GET.get("container"),req.GET.get("blob"),os.getcwd()+'\\kbdlake003\\application\\download\\'+req.GET.get("blob"))
-    filename = os.path.basename(os.getcwd()+'\\kbdlake003\\application\\download\\'+req.GET.get("blob"))
-    filepath = os.getcwd()+'\\kbdlake003\\application\\download\\'+req.GET.get("blob")
+    write_data.download_kbd_blob(req.GET.get("container"),req.GET.get("blob"),os.getcwd()+'/kbdlake003/application/download/'+req.GET.get("blob"))
+    filename = os.path.basename(os.getcwd()+'/kbdlake003/application/download/'+req.GET.get("blob"))
+    filepath = os.getcwd()+'/kbdlake003/application/download/'+req.GET.get("blob")
     return FileResponse(open(filepath, "rb"), as_attachment=True, filename=filename)
