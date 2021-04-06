@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
+from google.oauth2 import service_account
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -24,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'e&j3&qbzbad2x&o79pa&yydz)cg$$rd-v-2m((!=zt#jr7usc9'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -101,6 +102,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
+    # åÆÉtÉ@ÉCÉãÇÃPATHÇê›íË
+    os.path.join(BASE_DIR, 'pelagic-fin-302107-7da12e41090f.json'),
+)
+DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+STATICFILES_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+GS_BUCKET_NAME = 'kbd'
+GS_PROJECT_ID = 'pelagic-fin-302107'
+STATIC_URL = 'https://storage.googleapis.com/kbd/'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
