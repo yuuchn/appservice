@@ -7,7 +7,7 @@ from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 ##
 ############################################
 
-# ストレージ'(kbd2datalake001)
+# ストレージ'(kbd2datalake003)
 GEN2_CON_STR = 'DefaultEndpointsProtocol=https;AccountName=kbd2eadatalake003;AccountKey=pSKmnhb7+JxPXZ6wVPtzVNOiYy9Qs+puTrPgXhYvbGxBhkxSy/79gFKgmyTxi2aBO+GDbhkykvWRloEb7aIU0Q==;EndpointSuffix=core.windows.net'
 GEN2_ACCOUNT_NAME = 'kbd2eadatalake003'
 GEN2_ACCOUNT_KEY = 'pSKmnhb7+JxPXZ6wVPtzVNOiYy9Qs+puTrPgXhYvbGxBhkxSy/79gFKgmyTxi2aBO+GDbhkykvWRloEb7aIU0Q=='
@@ -120,7 +120,8 @@ def get_kbd_blob_list_search(container_name, name_starts_with):
 
     blobList=[]
     for blob in kbd_blob_list:
-        if name_starts_with in blob.name:
+        # DDS/KKKSフォルダ配下は機微情報のため検索対象除外
+        if name_starts_with in blob.name and 'DDS/KKKS/' not in blob.name:
             # リストに要素追加
             blobList+=[blob.name]
     return blobList
