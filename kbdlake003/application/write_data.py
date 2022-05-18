@@ -121,7 +121,9 @@ def get_kbd_blob_list_search(container_name, name_starts_with):
     blobList=[]
     for blob in kbd_blob_list:
         # DDS/KKKSフォルダ配下・KKKSフォルダ配下は機微情報のため検索対象除外
-        if name_starts_with in blob.name and ('DDS/KKKS/' not in blob.name or 'KKKS/KBDKKS' not in blob.name):
+        if 'DDS/KKKS/' in blob.name or 'KKKS/KBDKKS' in blob.name:
+            continue
+        if name_starts_with in blob.name:
             # リストに要素追加
             blobList+=[blob.name]
     return blobList
