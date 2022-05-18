@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: 'kbddds'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_F5BA4DB486BE44EEB96E4CE07A5A1129 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_09639609A0014439A1EB7FFCFA047CA6 }}
